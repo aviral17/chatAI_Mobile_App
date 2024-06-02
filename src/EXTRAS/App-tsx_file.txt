@@ -1,0 +1,312 @@
+// import React, {useState, useEffect} from 'react';
+// import {SafeAreaView, StyleSheet, View, Animated, Easing} from 'react-native';
+
+// const words = [
+//   "Let's Create",
+//   "Let's Brainstorm",
+//   "Let's Discover",
+//   'ChatGPT',
+//   "Let's go",
+//   "Let's explore",
+//   "Let's chit-chat",
+//   "Let's collaborate",
+//   "Let's invent",
+// ];
+
+// const colorPairs = [
+//   {text: '#1e40af', background: '#ea580c'},
+//   {text: '#d97706', background: '#7c3aed'},
+//   {text: '#10b981', background: '#f97316'},
+//   {text: '#f43f5e', background: '#14b8a6'},
+// ];
+
+// function App() {
+//   const [index, setIndex] = useState(0);
+//   const [subIndex, setSubIndex] = useState(0);
+//   const [reverse, setReverse] = useState(false);
+//   const [text, setText] = useState('');
+//   const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
+//     null,
+//   );
+//   const [colorIndex, setColorIndex] = useState(0);
+//   const textColor = useState(new Animated.Value(0))[0];
+//   const backgroundColor = useState(new Animated.Value(0))[0];
+
+//   useEffect(() => {
+//     const updateText = () => {
+//       setText(words[index].substring(0, subIndex));
+//     };
+
+//     if (typingTimeout) clearTimeout(typingTimeout);
+
+//     if (reverse) {
+//       if (subIndex === 0) {
+//         setTypingTimeout(
+//           setTimeout(() => {
+//             setReverse(false);
+//             setIndex(prevIndex => (prevIndex + 1) % words.length);
+//             setSubIndex(1);
+//             const nextColorIndex = (colorIndex + 1) % colorPairs.length;
+//             setColorIndex(nextColorIndex);
+//             textColor.setValue(nextColorIndex);
+//             backgroundColor.setValue(nextColorIndex);
+//           }, 1000),
+//         );
+//       } else {
+//         setTypingTimeout(
+//           setTimeout(() => {
+//             setSubIndex(prevSubIndex => prevSubIndex - 1);
+//           }, 80),
+//         );
+//       }
+//     } else {
+//       if (subIndex === words[index].length) {
+//         setTypingTimeout(
+//           setTimeout(() => {
+//             setReverse(true);
+//             const nextIndex = (colorIndex + 1) % colorPairs.length;
+//             Animated.timing(textColor, {
+//               toValue: nextIndex,
+//               duration: 1000,
+//               easing: Easing.inOut(Easing.ease),
+//               useNativeDriver: false,
+//             }).start();
+//             Animated.timing(backgroundColor, {
+//               toValue: nextIndex,
+//               duration: 1000,
+//               easing: Easing.inOut(Easing.ease),
+//               useNativeDriver: false,
+//             }).start();
+//           }, 2000),
+//         );
+//       } else {
+//         setTypingTimeout(
+//           setTimeout(() => {
+//             setSubIndex(prevSubIndex => prevSubIndex + 1);
+//           }, 10),
+//         );
+//       }
+//     }
+
+//     updateText();
+
+//     return () => {
+//       if (typingTimeout) clearTimeout(typingTimeout);
+//     };
+//   }, [subIndex, index, reverse]);
+
+//   const interpolateColor = (value: Animated.Value) => {
+//     return value.interpolate({
+//       inputRange: colorPairs.map((_, i) => i),
+//       outputRange: colorPairs.map(pair => pair.text),
+//     });
+//   };
+
+//   const interpolateBackgroundColor = (value: Animated.Value) => {
+//     return value.interpolate({
+//       inputRange: colorPairs.map((_, i) => i),
+//       outputRange: colorPairs.map(pair => pair.background),
+//     });
+//   };
+
+//   return (
+//     <Animated.View
+//       style={[
+//         styles.container,
+//         {backgroundColor: interpolateBackgroundColor(backgroundColor)},
+//       ]}>
+//       <View style={styles.textView}>
+//         <Animated.Text
+//           style={[styles.text, {color: interpolateColor(textColor)}]}>
+//           {text}
+//         </Animated.Text>
+//         <Animated.Text
+//           style={[styles.cursor, {color: interpolateColor(textColor)}]}>
+//           ●
+//         </Animated.Text>
+//       </View>
+//     </Animated.View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   textView: {
+//     flexDirection: 'row',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   text: {
+//     fontSize: 24,
+//     fontFamily: 'Manrope-Bold',
+//   },
+//   cursor: {
+//     fontWeight: 'bold',
+//     fontSize: 60,
+//     lineHeight: 75,
+//   },
+// });
+
+// export default App;
+
+import React, {useState, useEffect} from 'react';
+import {View, Animated, Easing, StyleSheet} from 'react-native';
+
+const words = [
+  "Let's Create",
+  "Let's Brainstorm",
+  "Let's Discover",
+  'ChatGPT',
+  "Let's go",
+  "Let's explore",
+  "Let's chit-chat",
+  "Let's collaborate",
+  "Let's invent",
+];
+
+const colorPairs = [
+  {text: '#4338ca', background: '#ea580c'},
+  {text: '#fbbf24', background: '#7c3aed'},
+  {text: '#020617', background: '#c026d3'},
+  {text: '#f8fafc', background: '#0f172a'},
+  {text: '#22c55e', background: '#2e1065'},
+  {text: '#4338ca', background: '#fed7aa'},
+  {text: '#facc15', background: '#030712'},
+];
+
+function App() {
+  const [index, setIndex] = useState(0);
+  const [subIndex, setSubIndex] = useState(0);
+  const [reverse, setReverse] = useState(false);
+  const [text, setText] = useState('');
+  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(
+    null,
+  );
+  const [colorIndex, setColorIndex] = useState(0);
+  const textColor = useState(new Animated.Value(0))[0];
+  const backgroundColor = useState(new Animated.Value(0))[0];
+
+  useEffect(() => {
+    const updateText = () => {
+      setText(words[index].substring(0, subIndex));
+    };
+
+    if (typingTimeout) clearTimeout(typingTimeout);
+
+    if (reverse) {
+      if (subIndex === 0) {
+        setTypingTimeout(
+          setTimeout(() => {
+            setReverse(false);
+            setIndex(prevIndex => (prevIndex + 1) % words.length);
+            setSubIndex(1);
+            const nextColorIndex = (colorIndex + 1) % colorPairs.length;
+            setColorIndex(nextColorIndex);
+            textColor.setValue(nextColorIndex);
+            backgroundColor.setValue(nextColorIndex);
+          }, 1000),
+        );
+      } else {
+        setTypingTimeout(
+          setTimeout(() => {
+            setSubIndex(prevSubIndex => prevSubIndex - 1);
+          }, 10), // Increased delete speed
+        );
+      }
+    } else {
+      if (subIndex === words[index].length) {
+        setTypingTimeout(
+          setTimeout(() => {
+            setReverse(true);
+            const nextIndex = (colorIndex + 1) % colorPairs.length;
+            Animated.timing(textColor, {
+              toValue: nextIndex,
+              duration: 1000,
+              easing: Easing.inOut(Easing.ease),
+              useNativeDriver: false,
+            }).start();
+            Animated.timing(backgroundColor, {
+              toValue: nextIndex,
+              duration: 1000,
+              easing: Easing.inOut(Easing.ease),
+              useNativeDriver: false,
+            }).start();
+          }, 2000),
+        );
+      } else {
+        setTypingTimeout(
+          setTimeout(() => {
+            setSubIndex(prevSubIndex => prevSubIndex + 1);
+          }, 10),
+        );
+      }
+    }
+
+    updateText();
+
+    return () => {
+      if (typingTimeout) clearTimeout(typingTimeout);
+    };
+  }, [subIndex, index, reverse]);
+
+  const interpolateColor = (value: Animated.Value) => {
+    return value.interpolate({
+      inputRange: colorPairs.map((_, i) => i),
+      outputRange: colorPairs.map(pair => pair.text),
+    });
+  };
+
+  const interpolateBackgroundColor = (value: Animated.Value) => {
+    return value.interpolate({
+      inputRange: colorPairs.map((_, i) => i),
+      outputRange: colorPairs.map(pair => pair.background),
+    });
+  };
+
+  return (
+    <Animated.View
+      style={[
+        styles.container,
+        {backgroundColor: interpolateBackgroundColor(backgroundColor)},
+      ]}>
+      <View style={styles.textView}>
+        <Animated.Text
+          style={[styles.text, {color: interpolateColor(textColor)}]}>
+          {text}
+        </Animated.Text>
+        <Animated.Text
+          style={[styles.cursor, {color: interpolateColor(textColor)}]}>
+          ●
+        </Animated.Text>
+      </View>
+    </Animated.View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 34,
+    fontFamily: 'Manrope-Bold',
+  },
+  cursor: {
+    fontWeight: 'bold',
+    fontSize: 50,
+    lineHeight: 75,
+  },
+});
+
+export default App;
