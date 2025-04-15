@@ -65,7 +65,7 @@ const SocialProviders = () => {
   );
 };
 
-// update styles 
+// update styles make it even smoother
 const styles = StyleSheet.create({
   providers: {
     height: 230,
