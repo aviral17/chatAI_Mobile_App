@@ -5,6 +5,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Login from './src/screen/Login';
 
+// Add more providers other than google like auth0
+
 const Stack = createStackNavigator();
 
 function App() {
