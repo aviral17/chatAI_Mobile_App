@@ -9,7 +9,7 @@ import Login from './src/screen/Login';
 
 const Stack = createStackNavigator();
 
-// update it as per latest requirements
+// update it as per latest requirements and add other providers
 function App() {
   return (
     <NavigationContainer>
